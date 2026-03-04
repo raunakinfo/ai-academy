@@ -1,0 +1,271 @@
+session we can skip a few slides. So in this session we will focus again we will reiterate
+a bit about the rug and we will go a bit more deeper in embeddings, vectorization and other
+rug systems and possibilities and we should come to the state where we can even
+build a quite big and reliable rug system that will utilize rug. At least this slide I can skip.
+So we will focus on the foundation then more advanced rug patterns and some do's and don'ts
+for production readiness and here we will cover even one of the questions that we had for the
+previous session. So on the foundation what is in general like embeddings? So we have the problem
+with that examples like words machine learning, algorithms, ML techniques and deep neural networks
+that's basically computer doesn't understand similarity of that words. Computers still
+understand only like numbers so it cannot help us to define just from the from the simple text
+are they similar or how it to find. So basically like embeddings it's a transformation
+of the text to the numeric representation on the vector. So when we talk about like machine
+learning then for our embeddings we have like this representation of the numbers
+depends on the dimensions so it's like on this exactly like image we have
+536 dimensions so it's basically like graphs with the different points
+and in the dimension of this size we are putting the representation of this word on that graph.
+The same like for the ML algorithm pizza and stuff like that and if we are asking like about
+machine learning for example then computer based on that vector representation and number
+representation can understand if like machine learning for example because we already
+transform the representation into the numbers if it's close to some of the
+like information that we have right now in the vector system or it's far. So based on
+like close and far it's basically like vector databases when we set up like choose top five
+results providing to us with the answer from the five closest objects and then
+retransform this to the text and we are basically getting that text that's most
+closest to the text from our request. In this case like for the machine learning ML algorithm
+is quite close because the distance 0.02 and if we just want to get only one
+like top element then we are getting ML algorithms. Pizza recipes is quite far
+so most probably system will not suggest this to us and if we are going a bit deeper to
+the exact similarity search how it works so we have our documents we already discussed about
+the rock pipeline so it's already transformed to the numerical representation from the embedded
+models and it stores somewhere here to the vector store and we have like three documents
+and we fully indexed that documents and it's stored and when we have a search
+and if we have like user query learn python then based on that documents that we stored
+our system identified the distance for our request and in this case quite close somewhat
+close and far away. If we set up that we want to pick up two top results so in this case
+we will get a python tutorial and java programming as well and then LLM maybe
+make a decision that's to show only like python tutorial but it can be the case that it will
+provide as a output to the user both like python tutorial and java programming because
+quality of the LLM play quite significant role in this case as well.
+Quite often like similarity metrics that systems identify this is angle between the actors
+vectors sorry straight line just distance between them and in some cases some dot
+multiplication in that systems.
+So why is like embedding quality matters because basically it's mean that how reliable answer
+our user of our system will get and right now MTEB metrics to be honest I don't remember
+exact like this full abbreviation but I provided the link to the little leaderboard and you
+will see what exactly it's mean what is the abbreviation. So this is the approach
+how current embedding models evaluated on the quality of their basically embeddings
+and accuracy of their embeddings and in the point of time when I was preparing this
+presentation few of the main or like top embedding models basically from the google
+and open AI and one of the open source no search but right now I guess Chinese
+embedding models on a good spot there as well so you can try and play and
+why they exactly like embeddings quality matters if we will see the different case
+studies or researchers you will still see that any embedding model or embedding system
+can provide 100 percentage of the accuracy because still
+LLM or like similarity search can be like mistakenly in interpreter
+and one of the like best result that you can find like on the google website for example
+it's research about the legal discovery so they put 1.4 million of different low documents
+with utilization of Gemini embedding and they achieved 87 percentage accuracy and it's like
+for sure quite good number and with the another like application mind lead they achieved 82
+percentage of three top results recall in terms of their metrics it's as well quite good result
+and in which what is good with the direction of embedding models and we discussed a bit
+when we discuss about chunking strategies that's when you utilize like additional ML or
+GenEI or embedding models it's additional time for indexing and it's additional time for the
+compute so it's much slower Gemini embedding already showing like quite good results
+in terms of the speed so they tried to vectorize 100 emails on one of the study and
+they achieved 21 and a half seconds for vectorization of all of that emails and just
+to give you perspective of how it fastened what is the how fast we are moving to improving
+all of these tools and systems the previous result was more than 200 seconds so the order
+of magnitude in terms of the speed increase for the vectorization in 10 times so that system
+is much more like improved and we are going like on that speed and that's changes with
+many models systems and tools in AI world because people experimenting companies
+putting a lot of effort in this race so to say
+and if we will talk a bit more about the databases exactly for the vectorization
+this is where I wanted to mention about the speed of changes as well because
+earlier I had this like slide of why we need to have like a separate database for embeddings
+and that's like current databases like systems they have different algorithms they don't have
+everything that is needed for the embeddings that they quiet slow for the embeddings
+and it was but PostgreSQL is moving with their
+extension they're moving in quite rapidly and catching up the speed question and especially
+amount of the operations basically like queries per second that they can handle
+and a lot of the researchers already show that Postgres is quite good alternative to the
+specialized even databases for the rug so you can see that for example like faster
+than pinecon and for sure like cheaper and still open source and
+for Quadrant it can handle much more request per second but it's on a huge amount of the
+data so they tested this on the 50 million embeddings and this is where like Quadrant
+start degrading with the speed of working so potentially you can use just that database
+that you used to and you just need to add additional extension for the embeddings
+and you can continue playing with your lovely Postgres but still we have the databases
+for the vectorization and they still play their own game and for what use case for what systems
+they have the best results and it was already mentioned about like Chroma today and Chroma
+is quite good when you're starting some of the prototyping it's less rare used in
+some big production systems but they already have their cloud Chroma I didn't try
+and still they have some kind of like limitations so Chroma database are quite good when you're
+starting and prototyping because it's quite easy to start you just pip install Chroma
+and almost everything is working so minimal configuration and you are starting almost
+like immediately with that it still has quite a good additional functionality like for example
+metadata filtering this is the additional information to your embeddings
+that you can provide as an example I've already mentioned for example like category of the
+documents that you are feeding if you have like many of the documents and chunks
+for example in the metadata you can still additionally provide information about
+what exact document from chunk is and different like multiple collections support
+when we are moving already like to the stage of potential MVP or already quite big production
+system then we need to have more reliable solution and here we can look in the direction
+of quadrant or for example like Postgres with the pg vector extension and on the previous
+slide you saw that quadrant not so good on 50 million vectors in terms of queries per second
+but when it's in the measure between like 1 to 10 million it's really quiet fast and can
+handle a lot of the requests like for example for 1 million it's 626
+queries per second and it's really quite fast and for that if you have
+that range of the vectors and you need to have quiet rapid embedding quadrant is a good choice
+in general but if you have like billions of vectors then this is the question about another
+type of the system and Milvus and they have this embedding database in a cloud it calls Zlin
+it's already fully designed for quite huge vector systems and it doesn't make sense
+to use this database for like much smaller systems if you have under 10 million vectors
+so do not recommend because
+that's the data and that's systems that going from the left to right
+it's then just harder like more complex to support setup and configure so that's why you
+are starting from the simplest one just for the rapid start and when your system is growing
+you're moving to the let's say next one and each of them just fulfill their purpose
+and about like rough patterns rough patterns in addition to the embeddings
+because we discussed about the embeddings vectorization
+it's not only one pattern or approach
+for the rough systems in addition we can have this problem with the multi-hop reasoning
+with the connection and in the cases where we need to where we have like a bit more
+wake request and we need to identify the connection for that request in most cases
+traditional vector rock systems they are failing and in example that I provided
+and the problem that we need to have like connection built from our request that user
+ask like marketing budget compliance GDPR and basically Europe and this is the
+the connections and this is exactly what we need already to utilize graph system
+and graph rock in addition and it helps to increase reliability of our system together with
+LLM and quite often this is like a representation of the graph that we have
+and when we when our user making the request it's just like getting some of the information
+from the request and learning the different connections and based on the connection
+that we have in the rock representation it can provide much better answer
+if we do not have like explicit information and one chunk of the information that we are
+grabbing from our vector system is not enough main players for the graph rock solutions so
+now for j falcon tiger graph man graph and orangodb
+mainly we are playing like with the now for j because you can easily like install it on your
+laptop and I guess it's one of the most popular solution I would say
+the next problem that's quite often come in the pdf processing problem so in the pdf we can have
+images in the pdf we can have tables and maybe some formulas so it's quite
+complex documents to to parse for the LLM and in the traditional rock pipelines we have like ocr
+objects so basically the ml system or it can be like LLM that can look exactly on the pdf
+and then provide in the text in the text view describe what it sees on the pdf
+and then we can just like vectorize it quite easily
+still we have like issue with the tables quite often and here like some ocr again
+can help some other approaches captions so instead of like using complex trivial system
+and that's relying on ocr because they quite often like failing with that
+we can just use some embedding model that can understand what it see show just embed the image
+and one of the interesting approach to solve this question for the last time
+it's quite like new let's say approach it's called poly library changes so they instead of
+like using ocr just for the describing what information exists on the pdf and then
+vectorize that information they have like vision language model for that and image
+representation just split to the patches and then that patches basically embed to the model
+and when we have the retrieval then we utilize that embedding model
+and still like visual language model to give the answer what we have from that images
+and this approach shows much better results in terms of like ruck system
+retrieval of the information from the system and it showed better result like
+it's 15 percentage approximately than standard retrieval system with the ocr that we have so to
+answer on the question quite often when we utilize the pdfs when we have a pdfs as documents
+we utilize the ocr for describing of that documents and then we store the information
+but this approach was there called poly showing quite interesting results and maybe it's something
+that will be used much more often in the future as a part of this type of ruck systems
+but still mostly ocr approach used
+and a bit about like agentic ruck because in ai right now everything changed to the agentic ruck
+and for sure this is quite interesting and quite reliable approach so in the standard
+reliable approach so in the standard ruck we have query and that query go into the
+embedding model then we query the embedding vector databases then vector databases provide
+to us like candidates like top candidates and then our query so our request plus
+candidates that our vector database provided goes to the llm then protests all of that
+information that we put and then provides to our user the answer when we have the agentic ruck
+we have type of like rotor agent lms and then within the tool set that's available for that
+llms it's choose where to to wrote that request so to the ruck lab search some external apis
+or taking control of the over the world and then only providing the output message
+here we will have a bit more information on that so agentic patterns and maybe like
+query routing request some of the decomposition and self-correction approaches in the
+agentic ruck system so when the user make the requests what the latest on ai regulation
+so llm rotor detect like latest then we will utilize the tool wrote to web search so that's
+why i said that like in general if we are saying that we add just additional tool like web search
+yes it's to some extent ruck system and like when we talk about the query the composition
+so we have compare our q3 to industry and predict q4 and first of all we have the
+the composition of that request that's agents our llm breaks like our q3 matrix then we need to find
+this information in our internal database or vector system industry q3 benchmarks potentially
+we don't have this information it's publicly available then web search and q4 factors again
+goes to the internal db but again it can go to the web search as well and the search pattern
+itself correction so we first have retrieval then we get in the documents then our
+agent based on some identified our like threshold measure this and if a score is like
+lower than our threshold then it can even like rewrite the query and then basically like
+retry again this approach with the retrieval grade docs and it can be
+cycled few times this self-correction and when it's it's to use well when we have like
+wide complex worries and in cases if everything else that we discussed earlier failed
+and you need to have like more higher accuracy if we have one we shouldn't use this
+it's for the simple retrievals and if our top quality attribute for our system is latency
+because you understand that this agentic systems where we have llm
+and needs to increase the quality of their results the time of these types of the request
+is growing i guess we will need maybe xana i guess our time is
+and yes we are a bit out of time if you have a time you can continue and also colleagues if you
+have a little bit of 10 minutes if we can continue this session
+i will try to finish this like in five minutes and then we will have five minutes for the
+questions i just will not stop quite deeply on each of the slide just few words and so what is
+the information important from that in addition to increase the quality of our ruck systems
+and why i mentioned earlier that you shouldn't rely only on the vector
+search in addition you can utilize like best match search this is what bm25
+it doesn't have a semantic understanding but it's calculate the number of
+words that it finds like the same words that it's finding the different documents and can provide
+based on that statistic statistical calculation what the documents we should pick up and on the
+researchers when we have like a hybrid system approach in terms of the search vector plus
+this bm25 it's increased accuracy for a bit more than 10 percentage and dcg3 this is like
+top three recalls basically top three candidates that that we saw earlier on the diagram
+and when we add the rerun here in addition it's even increased to 37.2 percentage
+rerun can it's additional layer that we add into the system and we are grabbing from our
+vector system or from our database a bit more results so we are we are grabbing instead of
+like five ten candidates we are grabbing hundred candidates and then our rerun can system
+try to understand what is the best candidates for us and then provide as a result to the llm
+like five or ten or maybe three of them oh and production readiness so basically what to do don't
+hybrid search hybrid search is the best we discussed in addition about like
+agentic search we discussed discussed about the graph and where it's the most useful and what
+databases you can utilize so based on your case based on what you need to achieve you can
+use any use any of that tools metadata filtering it's quite helpful especially
+when you need to have like metadata in general like storing of the metadata quite helpful
+especially when you need to have the resources seated like for example when you make the
+request and get not only some information from your documents in addition the citations
+or from what documents that that information is
+evaluation of your system
+embeddings reindexing and evaluation
+of the system quite often because you are making the updates and you can continue improving your
+system so don't it's like opposite of the dues so just quite helpful for you to
+not forget what you should do for the production systems and thank you
+so we have one question in our chat does embedding library i use for for my rock must match
+embedding library i used for training my llm
+embedding library for training your llm can you maybe give a bit more details
+uh can you maybe give a bit more details yeah so before training llm as i understand
+i need to embed like all the text and everything and do do the embedding yeah
+when you have a rock system you do not train your llm like fine tune your llm yeah it's not
+about i mean like when i trained my llm i used some embedding for example from
+from facebook or google do i have to use the same embedding library for my rug i mean
+as i understand uh like to put some do you mean you also need to do embedding
+uh do you mean when you are storing the documents to the vector database and when
+you are retrieving the documents from the database do you need to use the same
+yeah so when when they generate the knowledge base uh-huh okay and the version and everything
+should be the same and identical with like with the llm yes uh sometimes especially
+like from one provider they uh compatible uh one and another uh but you need to double
+check uh this uh information but general answer is yes got you thanks
+other question we have uh metrics like ngcg or recall require ground truth on
+answers should they come from humans
+this one uh you are preparing you're preparing uh in most cases yes because you are preparing the
+expected result uh on your request uh so yeah mainly it's uh human prepared
+metrics thank you maxim uh colleagues other questions maybe you have
+i have a question
+thank you so thank you for the session and in one of the latest slides you mentioned that
+we have to evaluate often and i think this is the most complex task when it comes to building
+ai based solutions so my question is whether we'll have any session uh any session that
+will explain how to build this evaluations for rax systems for overall like agentic systems
+so the question is about evaluations
+uh i will double check uh maybe in the next sessions uh that we will have on the rock
+enterprise productized maybe we will have uh the session on evaluation
+or we will discuss with uh our colleagues that we should potentially like add this
+as a part of our education because right now what what i see i don't see like exact
+evaluation uh in in the session but potentially it's a part of some of the next sessions
+okay thank you why i said not only uh because preparation of the data it's
+not so easy as well without evaluation you just don't know whether you did good
+job at preparing your data or not so you can be building a system for like weeks or months but
+if you do not have any metrics to check its accuracy and performance then it was for nothing
+so as always a human in the loop can save you from that but yes depends on the scalability
+of your system and all of that parameters yes i agree but in general what can i say
+it's not so easy still question for the evaluation in in general with
+with the work with all of these lm systems because they are like
+they are not like deterministic systems and still you need to identify the proper way
+how you can like even identify that top three that system should recall so different approaches
+in most the in most the approaches uh like some another llm utilized if you are not utilizing
+if you are not utilizing the people to to prepare the data so it's still
+not not uh finalized question even for for in general for the ai industry i would say

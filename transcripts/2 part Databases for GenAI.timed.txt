@@ -1,0 +1,271 @@
+[00:00.00 → 00:08.96] session we can skip a few slides. So in this session we will focus again we will reiterate
+[00:08.96 → 00:18.00] a bit about the rug and we will go a bit more deeper in embeddings, vectorization and other
+[00:19.20 → 00:25.60] rug systems and possibilities and we should come to the state where we can even
+[00:26.32 → 00:35.28] build a quite big and reliable rug system that will utilize rug. At least this slide I can skip.
+[00:36.56 → 00:44.40] So we will focus on the foundation then more advanced rug patterns and some do's and don'ts
+[00:45.28 → 00:52.40] for production readiness and here we will cover even one of the questions that we had for the
+[00:52.40 → 01:01.68] previous session. So on the foundation what is in general like embeddings? So we have the problem
+[01:01.68 → 01:09.20] with that examples like words machine learning, algorithms, ML techniques and deep neural networks
+[01:10.96 → 01:17.04] that's basically computer doesn't understand similarity of that words. Computers still
+[01:17.04 → 01:26.80] understand only like numbers so it cannot help us to define just from the from the simple text
+[01:26.80 → 01:36.16] are they similar or how it to find. So basically like embeddings it's a transformation
+[01:37.12 → 01:44.72] of the text to the numeric representation on the vector. So when we talk about like machine
+[01:44.72 → 01:53.84] learning then for our embeddings we have like this representation of the numbers
+[01:54.56 → 02:02.48] depends on the dimensions so it's like on this exactly like image we have
+[02:04.00 → 02:12.16] 536 dimensions so it's basically like graphs with the different points
+[02:13.12 → 02:23.44] and in the dimension of this size we are putting the representation of this word on that graph.
+[02:24.00 → 02:33.44] The same like for the ML algorithm pizza and stuff like that and if we are asking like about
+[02:34.00 → 02:42.96] machine learning for example then computer based on that vector representation and number
+[02:42.96 → 02:49.84] representation can understand if like machine learning for example because we already
+[02:53.20 → 02:59.68] transform the representation into the numbers if it's close to some of the
+[02:59.68 → 03:06.32] like information that we have right now in the vector system or it's far. So based on
+[03:06.32 → 03:16.08] like close and far it's basically like vector databases when we set up like choose top five
+[03:16.08 → 03:28.40] results providing to us with the answer from the five closest objects and then
+[03:28.40 → 03:38.96] retransform this to the text and we are basically getting that text that's most
+[03:38.96 → 03:46.16] closest to the text from our request. In this case like for the machine learning ML algorithm
+[03:47.12 → 03:55.04] is quite close because the distance 0.02 and if we just want to get only one
+[03:55.04 → 04:01.68] like top element then we are getting ML algorithms. Pizza recipes is quite far
+[04:01.68 → 04:12.64] so most probably system will not suggest this to us and if we are going a bit deeper to
+[04:12.64 → 04:21.12] the exact similarity search how it works so we have our documents we already discussed about
+[04:21.12 → 04:29.60] the rock pipeline so it's already transformed to the numerical representation from the embedded
+[04:29.60 → 04:39.20] models and it stores somewhere here to the vector store and we have like three documents
+[04:40.16 → 04:47.20] and we fully indexed that documents and it's stored and when we have a search
+[04:47.36 → 04:56.32] and if we have like user query learn python then based on that documents that we stored
+[04:56.32 → 05:06.56] our system identified the distance for our request and in this case quite close somewhat
+[05:06.56 → 05:15.36] close and far away. If we set up that we want to pick up two top results so in this case
+[05:16.00 → 05:24.08] we will get a python tutorial and java programming as well and then LLM maybe
+[05:24.96 → 05:31.36] make a decision that's to show only like python tutorial but it can be the case that it will
+[05:31.36 → 05:38.96] provide as a output to the user both like python tutorial and java programming because
+[05:38.96 → 05:44.80] quality of the LLM play quite significant role in this case as well.
+[05:46.16 → 05:54.72] Quite often like similarity metrics that systems identify this is angle between the actors
+[05:55.60 → 06:05.20] vectors sorry straight line just distance between them and in some cases some dot
+[06:05.20 → 06:09.12] multiplication in that systems.
+[06:11.92 → 06:22.08] So why is like embedding quality matters because basically it's mean that how reliable answer
+[06:22.40 → 06:40.40] our user of our system will get and right now MTEB metrics to be honest I don't remember
+[06:40.40 → 06:48.96] exact like this full abbreviation but I provided the link to the little leaderboard and you
+[06:48.96 → 06:57.52] will see what exactly it's mean what is the abbreviation. So this is the approach
+[06:57.52 → 07:07.20] how current embedding models evaluated on the quality of their basically embeddings
+[07:07.20 → 07:16.72] and accuracy of their embeddings and in the point of time when I was preparing this
+[07:16.72 → 07:24.88] presentation few of the main or like top embedding models basically from the google
+[07:24.88 → 07:32.64] and open AI and one of the open source no search but right now I guess Chinese
+[07:33.36 → 07:41.20] embedding models on a good spot there as well so you can try and play and
+[07:41.60 → 07:50.32] why they exactly like embeddings quality matters if we will see the different case
+[07:50.32 → 07:58.80] studies or researchers you will still see that any embedding model or embedding system
+[07:59.44 → 08:05.52] can provide 100 percentage of the accuracy because still
+[08:06.48 → 08:15.36] LLM or like similarity search can be like mistakenly in interpreter
+[08:16.64 → 08:24.40] and one of the like best result that you can find like on the google website for example
+[08:25.04 → 08:34.72] it's research about the legal discovery so they put 1.4 million of different low documents
+[08:35.92 → 08:44.72] with utilization of Gemini embedding and they achieved 87 percentage accuracy and it's like
+[08:44.72 → 08:57.28] for sure quite good number and with the another like application mind lead they achieved 82
+[08:57.28 → 09:07.20] percentage of three top results recall in terms of their metrics it's as well quite good result
+[09:07.20 → 09:16.88] and in which what is good with the direction of embedding models and we discussed a bit
+[09:17.52 → 09:24.16] when we discuss about chunking strategies that's when you utilize like additional ML or
+[09:25.04 → 09:34.08] GenEI or embedding models it's additional time for indexing and it's additional time for the
+[09:34.08 → 09:44.88] compute so it's much slower Gemini embedding already showing like quite good results
+[09:44.88 → 09:53.36] in terms of the speed so they tried to vectorize 100 emails on one of the study and
+[09:54.16 → 10:05.20] they achieved 21 and a half seconds for vectorization of all of that emails and just
+[10:05.20 → 10:15.12] to give you perspective of how it fastened what is the how fast we are moving to improving
+[10:16.08 → 10:26.16] all of these tools and systems the previous result was more than 200 seconds so the order
+[10:26.16 → 10:35.20] of magnitude in terms of the speed increase for the vectorization in 10 times so that system
+[10:35.20 → 10:45.12] is much more like improved and we are going like on that speed and that's changes with
+[10:47.52 → 10:56.88] many models systems and tools in AI world because people experimenting companies
+[10:57.76 → 11:05.36] putting a lot of effort in this race so to say
+[11:09.68 → 11:17.84] and if we will talk a bit more about the databases exactly for the vectorization
+[11:18.88 → 11:25.52] this is where I wanted to mention about the speed of changes as well because
+[11:26.96 → 11:36.56] earlier I had this like slide of why we need to have like a separate database for embeddings
+[11:36.56 → 11:46.80] and that's like current databases like systems they have different algorithms they don't have
+[11:47.84 → 11:52.48] everything that is needed for the embeddings that they quiet slow for the embeddings
+[11:53.20 → 11:59.04] and it was but PostgreSQL is moving with their
+[12:01.60 → 12:09.36] extension they're moving in quite rapidly and catching up the speed question and especially
+[12:10.24 → 12:17.04] amount of the operations basically like queries per second that they can handle
+[12:17.04 → 12:26.88] and a lot of the researchers already show that Postgres is quite good alternative to the
+[12:28.16 → 12:38.64] specialized even databases for the rug so you can see that for example like faster
+[12:39.12 → 12:44.64] than pinecon and for sure like cheaper and still open source and
+[12:46.96 → 12:57.28] for Quadrant it can handle much more request per second but it's on a huge amount of the
+[12:57.28 → 13:05.84] data so they tested this on the 50 million embeddings and this is where like Quadrant
+[13:05.84 → 13:16.40] start degrading with the speed of working so potentially you can use just that database
+[13:17.44 → 13:25.92] that you used to and you just need to add additional extension for the embeddings
+[13:26.00 → 13:36.32] and you can continue playing with your lovely Postgres but still we have the databases
+[13:36.88 → 13:47.68] for the vectorization and they still play their own game and for what use case for what systems
+[13:47.68 → 13:59.44] they have the best results and it was already mentioned about like Chroma today and Chroma
+[13:59.44 → 14:07.92] is quite good when you're starting some of the prototyping it's less rare used in
+[14:10.00 → 14:16.40] some big production systems but they already have their cloud Chroma I didn't try
+[14:17.84 → 14:26.56] and still they have some kind of like limitations so Chroma database are quite good when you're
+[14:26.56 → 14:32.96] starting and prototyping because it's quite easy to start you just pip install Chroma
+[14:33.76 → 14:42.32] and almost everything is working so minimal configuration and you are starting almost
+[14:42.96 → 14:49.76] like immediately with that it still has quite a good additional functionality like for example
+[14:50.32 → 14:56.48] metadata filtering this is the additional information to your embeddings
+[14:57.12 → 15:04.64] that you can provide as an example I've already mentioned for example like category of the
+[15:04.64 → 15:13.12] documents that you are feeding if you have like many of the documents and chunks
+[15:13.76 → 15:21.36] for example in the metadata you can still additionally provide information about
+[15:22.08 → 15:32.88] what exact document from chunk is and different like multiple collections support
+[15:33.84 → 15:42.24] when we are moving already like to the stage of potential MVP or already quite big production
+[15:43.04 → 15:49.60] system then we need to have more reliable solution and here we can look in the direction
+[15:49.60 → 16:00.00] of quadrant or for example like Postgres with the pg vector extension and on the previous
+[16:00.00 → 16:09.92] slide you saw that quadrant not so good on 50 million vectors in terms of queries per second
+[16:09.92 → 16:22.16] but when it's in the measure between like 1 to 10 million it's really quiet fast and can
+[16:22.24 → 16:29.44] handle a lot of the requests like for example for 1 million it's 626
+[16:30.56 → 16:37.52] queries per second and it's really quite fast and for that if you have
+[16:39.44 → 16:49.68] that range of the vectors and you need to have quiet rapid embedding quadrant is a good choice
+[16:50.24 → 17:02.56] in general but if you have like billions of vectors then this is the question about another
+[17:02.56 → 17:11.20] type of the system and Milvus and they have this embedding database in a cloud it calls Zlin
+[17:12.08 → 17:20.48] it's already fully designed for quite huge vector systems and it doesn't make sense
+[17:21.20 → 17:28.80] to use this database for like much smaller systems if you have under 10 million vectors
+[17:29.36 → 17:32.24] so do not recommend because
+[17:32.24 → 17:42.32] that's the data and that's systems that going from the left to right
+[17:44.40 → 17:53.12] it's then just harder like more complex to support setup and configure so that's why you
+[17:53.12 → 18:00.40] are starting from the simplest one just for the rapid start and when your system is growing
+[18:00.96 → 18:08.96] you're moving to the let's say next one and each of them just fulfill their purpose
+[18:12.64 → 18:18.24] and about like rough patterns rough patterns in addition to the embeddings
+[18:18.24 → 18:21.12] because we discussed about the embeddings vectorization
+[18:22.08 → 18:28.32] it's not only one pattern or approach
+[18:29.92 → 18:37.28] for the rough systems in addition we can have this problem with the multi-hop reasoning
+[18:38.16 → 18:46.56] with the connection and in the cases where we need to where we have like a bit more
+[18:46.56 → 18:55.12] wake request and we need to identify the connection for that request in most cases
+[18:57.04 → 19:05.84] traditional vector rock systems they are failing and in example that I provided
+[19:05.84 → 19:15.60] and the problem that we need to have like connection built from our request that user
+[19:15.60 → 19:20.96] ask like marketing budget compliance GDPR and basically Europe and this is the
+[19:22.00 → 19:29.36] the connections and this is exactly what we need already to utilize graph system
+[19:29.36 → 19:39.68] and graph rock in addition and it helps to increase reliability of our system together with
+[19:39.68 → 19:47.28] LLM and quite often this is like a representation of the graph that we have
+[19:47.28 → 19:55.36] and when we when our user making the request it's just like getting some of the information
+[19:55.36 → 20:02.88] from the request and learning the different connections and based on the connection
+[20:02.88 → 20:10.08] that we have in the rock representation it can provide much better answer
+[20:10.08 → 20:17.28] if we do not have like explicit information and one chunk of the information that we are
+[20:17.28 → 20:26.00] grabbing from our vector system is not enough main players for the graph rock solutions so
+[20:26.08 → 20:31.20] now for j falcon tiger graph man graph and orangodb
+[20:32.96 → 20:39.84] mainly we are playing like with the now for j because you can easily like install it on your
+[20:39.84 → 20:46.40] laptop and I guess it's one of the most popular solution I would say
+[20:46.96 → 21:00.16] the next problem that's quite often come in the pdf processing problem so in the pdf we can have
+[21:01.60 → 21:11.76] images in the pdf we can have tables and maybe some formulas so it's quite
+[21:12.72 → 21:26.00] complex documents to to parse for the LLM and in the traditional rock pipelines we have like ocr
+[21:26.88 → 21:39.20] objects so basically the ml system or it can be like LLM that can look exactly on the pdf
+[21:40.00 → 21:48.56] and then provide in the text in the text view describe what it sees on the pdf
+[21:48.56 → 21:51.60] and then we can just like vectorize it quite easily
+[21:55.12 → 22:04.16] still we have like issue with the tables quite often and here like some ocr again
+[22:04.24 → 22:11.92] can help some other approaches captions so instead of like using complex trivial system
+[22:12.80 → 22:19.28] and that's relying on ocr because they quite often like failing with that
+[22:20.32 → 22:29.84] we can just use some embedding model that can understand what it see show just embed the image
+[22:30.40 → 22:38.80] and one of the interesting approach to solve this question for the last time
+[22:39.92 → 22:52.88] it's quite like new let's say approach it's called poly library changes so they instead of
+[22:52.88 → 23:00.72] like using ocr just for the describing what information exists on the pdf and then
+[23:01.28 → 23:10.00] vectorize that information they have like vision language model for that and image
+[23:10.00 → 23:21.76] representation just split to the patches and then that patches basically embed to the model
+[23:21.76 → 23:30.24] and when we have the retrieval then we utilize that embedding model
+[23:30.24 → 23:40.40] and still like visual language model to give the answer what we have from that images
+[23:40.40 → 23:53.20] and this approach shows much better results in terms of like ruck system
+[23:55.68 → 24:02.24] retrieval of the information from the system and it showed better result like
+[24:03.20 → 24:12.48] it's 15 percentage approximately than standard retrieval system with the ocr that we have so to
+[24:12.48 → 24:19.76] answer on the question quite often when we utilize the pdfs when we have a pdfs as documents
+[24:20.32 → 24:28.16] we utilize the ocr for describing of that documents and then we store the information
+[24:28.80 → 24:36.16] but this approach was there called poly showing quite interesting results and maybe it's something
+[24:36.16 → 24:42.96] that will be used much more often in the future as a part of this type of ruck systems
+[24:43.52 → 24:46.80] but still mostly ocr approach used
+[24:47.76 → 24:57.20] and a bit about like agentic ruck because in ai right now everything changed to the agentic ruck
+[24:57.20 → 25:05.36] and for sure this is quite interesting and quite reliable approach so in the standard
+[25:05.60 → 25:14.88] reliable approach so in the standard ruck we have query and that query go into the
+[25:14.88 → 25:22.56] embedding model then we query the embedding vector databases then vector databases provide
+[25:22.56 → 25:30.72] to us like candidates like top candidates and then our query so our request plus
+[25:31.36 → 25:41.76] candidates that our vector database provided goes to the llm then protests all of that
+[25:41.76 → 25:49.84] information that we put and then provides to our user the answer when we have the agentic ruck
+[25:50.48 → 26:00.40] we have type of like rotor agent lms and then within the tool set that's available for that
+[26:00.40 → 26:10.00] llms it's choose where to to wrote that request so to the ruck lab search some external apis
+[26:10.00 → 26:16.08] or taking control of the over the world and then only providing the output message
+[26:18.56 → 26:24.32] here we will have a bit more information on that so agentic patterns and maybe like
+[26:24.40 → 26:31.28] query routing request some of the decomposition and self-correction approaches in the
+[26:31.28 → 26:39.68] agentic ruck system so when the user make the requests what the latest on ai regulation
+[26:39.68 → 26:48.00] so llm rotor detect like latest then we will utilize the tool wrote to web search so that's
+[26:48.00 → 26:55.44] why i said that like in general if we are saying that we add just additional tool like web search
+[26:55.44 → 27:04.40] yes it's to some extent ruck system and like when we talk about the query the composition
+[27:04.40 → 27:12.80] so we have compare our q3 to industry and predict q4 and first of all we have the
+[27:12.80 → 27:21.92] the composition of that request that's agents our llm breaks like our q3 matrix then we need to find
+[27:21.92 → 27:31.36] this information in our internal database or vector system industry q3 benchmarks potentially
+[27:31.36 → 27:40.88] we don't have this information it's publicly available then web search and q4 factors again
+[27:40.88 → 27:48.96] goes to the internal db but again it can go to the web search as well and the search pattern
+[27:48.96 → 27:58.40] itself correction so we first have retrieval then we get in the documents then our
+[27:59.36 → 28:08.48] agent based on some identified our like threshold measure this and if a score is like
+[28:09.20 → 28:15.60] lower than our threshold then it can even like rewrite the query and then basically like
+[28:15.60 → 28:23.44] retry again this approach with the retrieval grade docs and it can be
+[28:24.88 → 28:32.72] cycled few times this self-correction and when it's it's to use well when we have like
+[28:32.72 → 28:42.00] wide complex worries and in cases if everything else that we discussed earlier failed
+[28:42.72 → 28:51.04] and you need to have like more higher accuracy if we have one we shouldn't use this
+[28:52.16 → 29:02.08] it's for the simple retrievals and if our top quality attribute for our system is latency
+[29:02.16 → 29:08.88] because you understand that this agentic systems where we have llm
+[29:10.32 → 29:18.08] and needs to increase the quality of their results the time of these types of the request
+[29:18.08 → 29:31.04] is growing i guess we will need maybe xana i guess our time is
+[29:32.48 → 29:40.40] and yes we are a bit out of time if you have a time you can continue and also colleagues if you
+[29:40.40 → 29:48.32] have a little bit of 10 minutes if we can continue this session
+[29:50.56 → 29:56.40] i will try to finish this like in five minutes and then we will have five minutes for the
+[29:56.40 → 30:03.92] questions i just will not stop quite deeply on each of the slide just few words and so what is
+[30:03.92 → 30:11.36] the information important from that in addition to increase the quality of our ruck systems
+[30:11.92 → 30:16.72] and why i mentioned earlier that you shouldn't rely only on the vector
+[30:17.84 → 30:25.04] search in addition you can utilize like best match search this is what bm25
+[30:26.00 → 30:32.08] it doesn't have a semantic understanding but it's calculate the number of
+[30:33.20 → 30:40.32] words that it finds like the same words that it's finding the different documents and can provide
+[30:41.44 → 30:48.88] based on that statistic statistical calculation what the documents we should pick up and on the
+[30:48.88 → 30:56.24] researchers when we have like a hybrid system approach in terms of the search vector plus
+[30:56.24 → 31:05.60] this bm25 it's increased accuracy for a bit more than 10 percentage and dcg3 this is like
+[31:05.60 → 31:13.28] top three recalls basically top three candidates that that we saw earlier on the diagram
+[31:14.00 → 31:23.12] and when we add the rerun here in addition it's even increased to 37.2 percentage
+[31:23.92 → 31:31.20] rerun can it's additional layer that we add into the system and we are grabbing from our
+[31:31.20 → 31:37.36] vector system or from our database a bit more results so we are we are grabbing instead of
+[31:37.36 → 31:43.44] like five ten candidates we are grabbing hundred candidates and then our rerun can system
+[31:44.88 → 31:51.44] try to understand what is the best candidates for us and then provide as a result to the llm
+[31:51.44 → 32:02.08] like five or ten or maybe three of them oh and production readiness so basically what to do don't
+[32:03.04 → 32:09.44] hybrid search hybrid search is the best we discussed in addition about like
+[32:10.80 → 32:18.56] agentic search we discussed discussed about the graph and where it's the most useful and what
+[32:18.56 → 32:27.28] databases you can utilize so based on your case based on what you need to achieve you can
+[32:27.36 → 32:37.12] use any use any of that tools metadata filtering it's quite helpful especially
+[32:37.12 → 32:44.80] when you need to have like metadata in general like storing of the metadata quite helpful
+[32:44.80 → 32:52.64] especially when you need to have the resources seated like for example when you make the
+[32:52.64 → 33:02.64] request and get not only some information from your documents in addition the citations
+[33:02.64 → 33:06.24] or from what documents that that information is
+[33:09.28 → 33:11.12] evaluation of your system
+[33:13.44 → 33:17.92] embeddings reindexing and evaluation
+[33:18.80 → 33:26.72] of the system quite often because you are making the updates and you can continue improving your
+[33:26.72 → 33:35.52] system so don't it's like opposite of the dues so just quite helpful for you to
+[33:36.40 → 33:40.56] not forget what you should do for the production systems and thank you
+[33:41.52 → 33:49.84] so we have one question in our chat does embedding library i use for for my rock must match
+[33:49.84 → 33:52.88] embedding library i used for training my llm
+[33:58.40 → 34:04.16] embedding library for training your llm can you maybe give a bit more details
+[34:04.80 → 34:12.64] uh can you maybe give a bit more details yeah so before training llm as i understand
+[34:12.64 → 34:18.56] i need to embed like all the text and everything and do do the embedding yeah
+[34:21.36 → 34:29.04] when you have a rock system you do not train your llm like fine tune your llm yeah it's not
+[34:29.04 → 34:34.32] about i mean like when i trained my llm i used some embedding for example from
+[34:34.32 → 34:41.76] from facebook or google do i have to use the same embedding library for my rug i mean
+[34:43.68 → 34:50.32] as i understand uh like to put some do you mean you also need to do embedding
+[34:51.60 → 34:57.36] uh do you mean when you are storing the documents to the vector database and when
+[34:57.36 → 35:02.24] you are retrieving the documents from the database do you need to use the same
+[35:02.24 → 35:09.76] yeah so when when they generate the knowledge base uh-huh okay and the version and everything
+[35:09.76 → 35:15.84] should be the same and identical with like with the llm yes uh sometimes especially
+[35:15.84 → 35:24.80] like from one provider they uh compatible uh one and another uh but you need to double
+[35:24.80 → 35:33.04] check uh this uh information but general answer is yes got you thanks
+[35:35.76 → 35:42.64] other question we have uh metrics like ngcg or recall require ground truth on
+[35:42.64 → 35:45.04] answers should they come from humans
+[35:51.20 → 35:58.48] this one uh you are preparing you're preparing uh in most cases yes because you are preparing the
+[35:59.36 → 36:09.20] expected result uh on your request uh so yeah mainly it's uh human prepared
+[36:10.16 → 36:16.88] metrics thank you maxim uh colleagues other questions maybe you have
+[36:22.56 → 36:23.52] i have a question
+[36:27.36 → 36:33.44] thank you so thank you for the session and in one of the latest slides you mentioned that
+[36:33.52 → 36:40.08] we have to evaluate often and i think this is the most complex task when it comes to building
+[36:40.08 → 36:47.84] ai based solutions so my question is whether we'll have any session uh any session that
+[36:47.84 → 36:54.56] will explain how to build this evaluations for rax systems for overall like agentic systems
+[36:55.84 → 36:57.84] so the question is about evaluations
+[36:57.84 → 37:10.00] uh i will double check uh maybe in the next sessions uh that we will have on the rock
+[37:11.68 → 37:18.32] enterprise productized maybe we will have uh the session on evaluation
+[37:19.52 → 37:26.48] or we will discuss with uh our colleagues that we should potentially like add this
+[37:27.92 → 37:33.76] as a part of our education because right now what what i see i don't see like exact
+[37:34.32 → 37:41.76] evaluation uh in in the session but potentially it's a part of some of the next sessions
+[37:42.48 → 37:52.16] okay thank you why i said not only uh because preparation of the data it's
+[37:53.04 → 37:57.36] not so easy as well without evaluation you just don't know whether you did good
+[37:57.36 → 38:04.00] job at preparing your data or not so you can be building a system for like weeks or months but
+[38:04.00 → 38:09.52] if you do not have any metrics to check its accuracy and performance then it was for nothing
+[38:10.08 → 38:22.16] so as always a human in the loop can save you from that but yes depends on the scalability
+[38:22.24 → 38:32.24] of your system and all of that parameters yes i agree but in general what can i say
+[38:34.08 → 38:42.00] it's not so easy still question for the evaluation in in general with
+[38:42.00 → 38:47.84] with the work with all of these lm systems because they are like
+[38:48.00 → 38:57.04] they are not like deterministic systems and still you need to identify the proper way
+[38:57.04 → 39:06.40] how you can like even identify that top three that system should recall so different approaches
+[39:06.40 → 39:14.24] in most the in most the approaches uh like some another llm utilized if you are not utilizing
+[39:14.64 → 39:19.76] if you are not utilizing the people to to prepare the data so it's still
+[39:21.92 → 39:41.44] not not uh finalized question even for for in general for the ai industry i would say
