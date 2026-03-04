@@ -379,7 +379,7 @@ def main():
     load_dotenv()
 
     if not os.getenv("GOOGLE_API_KEY"):
-        os.environ["GOOGLE_API_KEY"] = "AIzaSyBN0RdBFiZVog1_qpG4lVFo_n75hMiZ17Y"  
+        os.environ["GOOGLE_API_KEY"] = "xxx"  
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--ingest", action="store_true", help="Ingest PDFs + media into the vector DB")

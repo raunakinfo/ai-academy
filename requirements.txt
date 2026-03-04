@@ -7,3 +7,5 @@ pypdf
 google-generativeai
 faster-whisper
 langchain-google-genai
+
+AIzaSyBN0RdBFiZVog1_qpG4lVFo_n75hMiZ17Y
