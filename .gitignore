@@ -1,0 +1,4 @@
+.venv1/
+audio/
+transcripts/_tmp_audio/
+chroma_db/
